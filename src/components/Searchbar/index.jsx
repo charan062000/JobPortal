@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Searchbar = () => {
+  const [jobCriteria, setJobCriteria] = useState({
+    title: "",
+    location: "",
+    experience: "",
+    type: "",
+  });
+
+  const handleChange = (e) => {
+    setJobCriteria({ ...jobCriteria, [e.target.name]: e.target.value });
+  };
+  console.log(jobCriteria);
+  const search = async (props) => {
+    await props.fetchJobsCustom(jobCriteria);
+  };
   return (
     <div className=" flex gap-5 my-10 justify-center px-10">
-      <select className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md">
+      <select
+        onChange={handleChange}
+        name="title"
+        value={jobCriteria.title}
+        className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md"
+      >
         <option value="" disabled hidden selected>
           Job Role
         </option>
@@ -12,7 +31,12 @@ const Searchbar = () => {
         <option>Manager</option>
       </select>
 
-      <select className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md">
+      <select
+        onChange={handleChange}
+        name="type"
+        value={jobCriteria.type}
+        className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md"
+      >
         <option value="" disabled hidden>
           Job Type
         </option>
@@ -21,7 +45,12 @@ const Searchbar = () => {
         <option value="Contract">Contract</option>
       </select>
 
-      <select className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md">
+      <select
+        onChange={handleChange}
+        name="location"
+        value={jobCriteria.location}
+        className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md"
+      >
         <option value="" disabled hidden>
           Location
         </option>
@@ -29,7 +58,12 @@ const Searchbar = () => {
         <option value="In-Office">In-Office</option>
         <option value="Hybrid">Hybrid</option>
       </select>
-      <select className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md">
+      <select
+        onChange={handleChange}
+        name="experience"
+        value={jobCriteria.experience}
+        className="w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md"
+      >
         <option value="" disabled hidden>
           Experience
         </option>
@@ -39,7 +73,12 @@ const Searchbar = () => {
         <option value="Senior Level">Senior Level</option>
       </select>
 
-      <button className="w-64 bg-blue-500 text-white font-bold py-3 rounded-md">Search</button>
+      <button
+        onClick={search}
+        className="w-64 bg-blue-500 text-white font-bold py-3 rounded-md"
+      >
+        Search
+      </button>
     </div>
   );
 };
